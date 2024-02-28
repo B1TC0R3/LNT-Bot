@@ -1,5 +1,5 @@
-# Bot token
-token
+# Configuration with secrets
+config.py
 
 # Venv
 bin
