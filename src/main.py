@@ -1,4 +1,5 @@
 import discord
+
 from discord import app_commands
 from discord.ext import commands
 from config import TOKEN, GUILD
@@ -28,17 +29,20 @@ async def ping(
 @bot.tree.command(name="resource", guild=guild_id)
 @app_commands.describe(
     title="The title of the resource",
-    description="Description of the resource",
-    url="The link to the resource"
+    url="The link to the resource",
+    description="(Optional) A description of the resource",
+    tags="(Optional) A comma separated list of tags to make it easier to find the resource. Only supports letters and numbers."
 )
 async def resource(
     interaction: discord.Interaction,
     title: str,
     url: str,
-    description: str=''
+    description: str="",
+    tags: str=""
 ):
     embed = discord.Embed(title=title, description=description)
-    embed.add_field(name="URL", value=url)
+    embed.add_field(name="Tags", value=tags, inline=False)
+    embed.add_field(name="URL", value=url, inline=False)
 
     await interaction.response.send_message(embed=embed)
 
