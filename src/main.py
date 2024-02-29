@@ -14,9 +14,6 @@ bot      = commands.Bot(command_prefix='!', intents=intents)
 @bot.event
 async def on_ready():
     try:
-        await bot.load_extension("cogs.ping")
-        await bot.load_extension("cogs.resource")
-
         for file in os.listdir("./cogs"):
             if os.path.isfile(file) and file.endswith(".py"):
                 bot.load_extension(f"cogs.{file[:-3]}")
