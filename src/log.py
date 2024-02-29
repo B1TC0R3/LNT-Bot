@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import datetime
 
 def info(message):
     print(f"[{datetime.now()}] \x1b[1m\x1b[32mINFO\x1b[0m {message}")
