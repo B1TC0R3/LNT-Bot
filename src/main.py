@@ -1,4 +1,5 @@
 import discord
+import os
 
 from discord import app_commands
 from discord.ext import commands
@@ -14,6 +15,10 @@ async def on_ready():
     try:
         await bot.load_extension("cogs.ping")
         await bot.load_extension("cogs.resource")
+
+        for file in os.listdir("./cogs"):
+            if os.path.isfile(file) and file.endswith(".py"):
+                bot.load_extension(f"cogs.{file[:-3]}")
 
         synced = await bot.tree.sync(guild=guild_id)
         print(f'Synced commands: {len(synced)}')

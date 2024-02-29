@@ -12,10 +12,10 @@ class ResourceCog(commands.Cog):
     @app_commands.command(name="resource")
     @app_commands.guilds(discord.Object(id=GUILD))
     @app_commands.describe(
-        title="The title of the resource",
-        url="The link to the resource",
-        description="(Optional) A description of the resource",
-        tags="(Optional) A comma separated list of tags to make it easier to find the resource. Only supports letters and numbers."
+        title       = "The title of the resource",
+        url         = "The link to the resource",
+        description = "(Optional) A description of the resource",
+        tags        = "(Optional) A comma separated list of tags to make it easier to find the resource. Only supports letters and numbers."
     )
     async def resource(
         self,
@@ -27,7 +27,7 @@ class ResourceCog(commands.Cog):
     ):
         embed = discord.Embed(title=title, description=description)
         embed.add_field(name="Tags", value=tags, inline=False)
-        embed.add_field(name="URL", value=url, inline=False)
+        embed.add_field(name="URL",  value=url,  inline=False)
 
         await interaction.response.send_message(embed=embed)
 
