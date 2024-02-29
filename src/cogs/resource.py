@@ -5,7 +5,7 @@ import log
 
 from discord import app_commands
 from discord.ext import commands
-from config import GUILD
+from config import GUILD, RESOURCE_CHANNEL_ID
 
 
 class ResourceCog(commands.Cog):
@@ -31,11 +31,13 @@ class ResourceCog(commands.Cog):
     ):
         log.info(f"User {interaction.user.name}: /resource {title} {url} {description} {tags}")
 
+        resource_channel = self.bot.get_channel(RESOURCE_CHANNEL_ID)
+
         embed = discord.Embed(title=title, description=description)
         embed.add_field(name="Tags", value=tags, inline=False)
         embed.add_field(name="URL",  value=url,  inline=False)
 
-        await interaction.response.send_message(embed=embed)
+        await resource_channel.send(embed=embed)
 
     @resource.error
     async def resource_error(self, interaction, error):
