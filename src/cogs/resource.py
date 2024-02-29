@@ -1,4 +1,7 @@
+from os import EFD_SEMAPHORE
 import discord
+import authorize
+import log
 
 from discord import app_commands
 from discord.ext import commands
@@ -10,6 +13,7 @@ class ResourceCog(commands.Cog):
         self.bot = bot
 
     @app_commands.command(name="resource")
+    @app_commands.check(authorize.has_authorized_role)
     @app_commands.guilds(discord.Object(id=GUILD))
     @app_commands.describe(
         title       = "The title of the resource",
@@ -25,11 +29,21 @@ class ResourceCog(commands.Cog):
         description: str = "",
         tags       : str = ""
     ):
+        log.info(f"User {interaction.user.name}: /resource {title} {url} {description} {tags}")
+
         embed = discord.Embed(title=title, description=description)
         embed.add_field(name="Tags", value=tags, inline=False)
         embed.add_field(name="URL",  value=url,  inline=False)
 
         await interaction.response.send_message(embed=embed)
+
+    @resource.error
+    async def resource_error(self, interaction, error):
+        log.warn(f"UNAUTHORIZED: User {interaction.user.name}: /resource [arguments dropped]")
+        await interaction.response.send_message(
+            "Not authorized to use /resource!",
+            ephemeral=True
+        )
 
 
 async def setup(bot):

@@ -1,5 +1,6 @@
 import discord
 import os
+import log
 
 from discord import app_commands
 from discord.ext import commands
@@ -21,7 +22,7 @@ async def on_ready():
                 bot.load_extension(f"cogs.{file[:-3]}")
 
         synced = await bot.tree.sync(guild=guild_id)
-        print(f'Synced commands: {len(synced)}')
+        log.info(f"Synced commands: {len(synced)}")
 
     except Exception as e:
         print(e)
